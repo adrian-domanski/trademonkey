@@ -1,122 +1,89 @@
-import axios from "axios";
-import {
-  CompanyBalanceSheet,
-  CompanyCashFlow,
-  CompanyCompData,
-  CompanyIncomeStatement,
-  CompanyKeyMetrics,
-  CompanyProfile,
-  CompanySearch,
-  CompanyTenK,
-  CompanyHistoricalDividend,
-  Dividend,
-} from "./company";
+// api.ts
 
-export interface SearchResponse {
-  data: CompanySearch[];
-}
+import axios from 'axios';
+
+// Import ONLY premium mocks
+import {
+  getKeyMetrics as mockGetKeyMetrics,
+  getCompData as mockGetCompData,
+  getTenK as mockGetTenK,
+  getHistoricalDividend as mockGetHistoricalDividend,
+} from './mockApi';
+
+const API_KEY = process.env.REACT_APP_API_KEY;
+
+/* =========================
+   FREE ENDPOINTS (REAL API)
+========================= */
 
 export const searchCompanies = async (query: string) => {
   try {
-    const data = await axios.get<SearchResponse>(
-      `https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ&apikey=${process.env.REACT_APP_API_KEY}`
+    return await axios.get(
+      `https://financialmodelingprep.com/stable/search-symbol?query=${query}&apikey=${API_KEY}`,
     );
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log("error message: ", error.message);
-      return error.message;
-    } else {
-      console.log("unexpected error: ", error);
-      return "An expected error has occured.";
-    }
+  } catch {
+    return { data: [] };
   }
 };
 
 export const getCompanyProfile = async (query: string) => {
   try {
-    const data = await axios.get<CompanyProfile[]>(
-      `https://financialmodelingprep.com/api/v3/profile/${query}?apikey=${process.env.REACT_APP_API_KEY}`
+    return await axios.get(
+      `https://financialmodelingprep.com/stable/profile?symbol=${query}&apikey=${API_KEY}`,
     );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
-  }
-};
-
-export const getKeyMetrics = async (query: string) => {
-  try {
-    const data = await axios.get<CompanyKeyMetrics[]>(
-      `https://financialmodelingprep.com/api/v3/key-metrics-ttm/${query}?limit=40&apikey=${process.env.REACT_APP_API_KEY}`
-    );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
+  } catch {
+    return { data: [] };
   }
 };
 
 export const getIncomeStatement = async (query: string) => {
   try {
-    const data = await axios.get<CompanyIncomeStatement[]>(
-      `https://financialmodelingprep.com/api/v3/income-statement/${query}?limit=50&apikey=${process.env.REACT_APP_API_KEY}`
+    return await axios.get(
+      `https://financialmodelingprep.com/stable/income-statement?symbol=${query}&apikey=${API_KEY}`,
     );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
+  } catch {
+    return { data: [] };
   }
 };
 
 export const getBalanceSheet = async (query: string) => {
   try {
-    const data = await axios.get<CompanyBalanceSheet[]>(
-      `https://financialmodelingprep.com/api/v3/balance-sheet-statement/${query}?limit=20&apikey=${process.env.REACT_APP_API_KEY}`
+    return await axios.get(
+      `https://financialmodelingprep.com/stable/balance-sheet-statement?symbol=${query}&apikey=${API_KEY}`,
     );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
+  } catch {
+    return { data: [] };
   }
 };
 
 export const getCashFlow = async (query: string) => {
   try {
-    const data = await axios.get<CompanyCashFlow[]>(
-      `https://financialmodelingprep.com/api/v3/cash-flow-statement/${query}?limit=100&apikey=${process.env.REACT_APP_API_KEY}`
+    return await axios.get(
+      `https://financialmodelingprep.com/stable/cash-flow-statement?symbol=${query}&apikey=${API_KEY}`,
     );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
+  } catch {
+    return { data: [] };
   }
+};
+
+/* =========================
+   PREMIUM ENDPOINTS (MOCKED)
+========================= */
+
+// These now call mockApi instead of FMP
+
+export const getKeyMetrics = async (query: string) => {
+  return await mockGetKeyMetrics(query);
 };
 
 export const getCompData = async (query: string) => {
-  try {
-    const data = await axios.get<CompanyCompData[]>(
-      `https://financialmodelingprep.com/api/v4/stock_peers?symbol=${query}&apikey=${process.env.REACT_APP_API_KEY}`
-    );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
-  }
+  return await mockGetCompData(query);
 };
 
 export const getTenK = async (query: string) => {
-  try {
-    const data = await axios.get<CompanyTenK[]>(
-      `https://financialmodelingprep.com/api/v3/sec_filings/${query}?type=10-K&page=0&apikey=${process.env.REACT_APP_API_KEY}`
-    );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
-  }
+  return await mockGetTenK(query);
 };
 
 export const getHistoricalDividend = async (query: string) => {
-  try {
-    const data = await axios.get<CompanyHistoricalDividend>(
-      `https://financialmodelingprep.com/api/v3/historical-price-full/stock_dividend/${query}?apikey=${process.env.REACT_APP_API_KEY}`
-    );
-    return data;
-  } catch (error: any) {
-    console.log("error message: ", error.message);
-  }
+  return await mockGetHistoricalDividend(query);
 };
