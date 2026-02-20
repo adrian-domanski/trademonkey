@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CompanyProfile } from '../../company';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getCompanyProfile } from '../../api';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import CompanyDashboard from '../../Components/CompanyDashboard/CompanyDashboard';
@@ -31,8 +31,8 @@ const CompanyPage = (props: Props) => {
           <Sidebar />
           <CompanyDashboard ticker={ticker!}>
             <Tile title='Company Name' subTitle={company.companyName} />
-            {/* <Tile title='Price' subTitle={'$' + company.price.toString()} />
-            <Tile title='DCF' subTitle={'$' + company.dcf.toString()} /> */}
+            <Tile title='Price' subTitle={'$' + String(company.price)} />
+            <Tile title='DCF' subTitle={'$' + String(company.dcf ?? 5)} />
             <Tile title='Sector' subTitle={company.sector} />
             <CompFinder ticker={company.symbol} />
             <TenKFinder ticker={company.symbol} />

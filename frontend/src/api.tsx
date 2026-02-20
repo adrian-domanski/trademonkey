@@ -2,18 +2,22 @@
 
 import axios from 'axios';
 
-// Import ONLY premium mocks
+// Import ALL mocked endpoints
 import {
+  getCompanyProfile as mockGetCompanyProfile,
   getKeyMetrics as mockGetKeyMetrics,
   getCompData as mockGetCompData,
   getTenK as mockGetTenK,
   getHistoricalDividend as mockGetHistoricalDividend,
+  getCashFlow as mockGetCashFlow,
+  getIncomeStatement as mockGetIncomeStatement,
+  getBalanceSheet as mockGetBalanceSheet,
 } from './mockApi';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 /* =========================
-   FREE ENDPOINTS (REAL API)
+   REAL ENDPOINT (SEARCH ONLY)
 ========================= */
 
 export const searchCompanies = async (query: string) => {
@@ -26,51 +30,25 @@ export const searchCompanies = async (query: string) => {
   }
 };
 
+/* =========================
+   MOCKED ENDPOINTS
+========================= */
+
 export const getCompanyProfile = async (query: string) => {
-  try {
-    return await axios.get(
-      `https://financialmodelingprep.com/stable/profile?symbol=${query}&apikey=${API_KEY}`,
-    );
-  } catch {
-    return { data: [] };
-  }
+  return await mockGetCompanyProfile(query);
 };
 
 export const getIncomeStatement = async (query: string) => {
-  try {
-    return await axios.get(
-      `https://financialmodelingprep.com/stable/income-statement?symbol=${query}&apikey=${API_KEY}`,
-    );
-  } catch {
-    return { data: [] };
-  }
+  return await mockGetIncomeStatement(query);
 };
 
 export const getBalanceSheet = async (query: string) => {
-  try {
-    return await axios.get(
-      `https://financialmodelingprep.com/stable/balance-sheet-statement?symbol=${query}&apikey=${API_KEY}`,
-    );
-  } catch {
-    return { data: [] };
-  }
+  return await mockGetBalanceSheet(query);
 };
 
 export const getCashFlow = async (query: string) => {
-  try {
-    return await axios.get(
-      `https://financialmodelingprep.com/stable/cash-flow-statement?symbol=${query}&apikey=${API_KEY}`,
-    );
-  } catch {
-    return { data: [] };
-  }
+  return await mockGetCashFlow(query);
 };
-
-/* =========================
-   PREMIUM ENDPOINTS (MOCKED)
-========================= */
-
-// These now call mockApi instead of FMP
 
 export const getKeyMetrics = async (query: string) => {
   return await mockGetKeyMetrics(query);

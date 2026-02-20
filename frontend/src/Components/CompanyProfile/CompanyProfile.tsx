@@ -91,6 +91,7 @@ const CompanyProfile = (props: Props) => {
     };
     getCompanyKeyRatios();
   }, []);
+
   return (
     <>
       {companyData ? (
