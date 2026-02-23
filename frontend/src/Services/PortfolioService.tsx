@@ -1,8 +1,9 @@
-import axios from "axios";
-import { PortfolioGet, PortfolioPost } from "../Models/Portfolio";
-import { handleError } from "../Helpers/ErrorHandler";
+import axios from 'axios';
+import { PortfolioGet, PortfolioPost } from '../Models/Portfolio';
+import { handleError } from '../Helpers/ErrorHandler';
 
-const api = "http://localhost:5167/api/portfolio/";
+const baseUrl = process.env.REACT_APP_API_URL;
+const api = `${baseUrl}/api/portfolio/`;
 
 export const portfolioAddAPI = async (symbol: string) => {
   try {
