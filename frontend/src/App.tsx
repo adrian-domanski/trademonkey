@@ -16,9 +16,19 @@ function App() {
   useEffect(() => {
     const wakeServer = async () => {
       try {
-        await fetch(`${API_URL}/health`);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+          controller.abort();
+        }, 5000); // 5 second timeout
+
+        await fetch(`${API_URL}/health`, {
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeout);
         setIsReady(true);
       } catch (error) {
+        // Retry after 3 seconds
         setTimeout(wakeServer, 3000);
       }
     };
