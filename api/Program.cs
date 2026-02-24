@@ -100,6 +100,7 @@ builder.Services.AddHttpClient<IFMPService, FMPService>();
 var app = builder.Build();
 
 app.MapGet("/", () => "TradeMonkey API is running!");
+app.MapGet("/health", () => Results.Ok("Healthy"));
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
