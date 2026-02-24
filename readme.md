@@ -90,17 +90,17 @@ cd frontend && npm install && npm run start
 ## 🔐 Environment Variables
 
 Backend:
-ConnectionStrings\_\_DefaultConnection=your_production_connection_string 
-FMPKey=(get from https://site.financialmodelingprep.com/) 
-"JWT": { 
+- ConnectionStrings\_\_DefaultConnection=your_production_connection_string 
+- FMPKey=(get from https://site.financialmodelingprep.com/) 
+- "JWT": { 
 "Issuer": "" 
 "Audience": "" 
 "SigningKey": ""
 }
 
 Frontend:
-REACT_APP_API_KEY= same as FMPKey (get from https://site.financialmodelingprep.com/) 
-REACT_APP_API_URL= backend api url 
+- REACT_APP_API_KEY= same as FMPKey (get from https://site.financialmodelingprep.com/) 
+- REACT_APP_API_URL= backend api url 
 
 ---
 
